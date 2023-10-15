@@ -116,7 +116,7 @@ const LayoutAdmin =({children}) =>{
         <React.Fragment>
             <div className="d-flex sb-sidenav-toggled" id="wrapper">
             <div className="bg-white" id="sidebar-wrapper">
-                <div className="sidebar-heading bg-light text-center"><i className="fa fa-map-marked-alt"></i> <strong>TRAVEL GIS</strong> <small>ADMIN</small></div>
+                <div className="sidebar-heading bg-light text-center"><i className="fa fa-map-marked-alt"></i>  <strong>{user.Nama}</strong></div>
                 <Sidebar />
             </div>
             <div id="page-content-wrapper">
@@ -125,7 +125,7 @@ const LayoutAdmin =({children}) =>{
                         <button className="btn btn-success-dark" onClick={sidebarToggleHandler}><i className="fa fa-list-ul"></i></button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
-                            <NavDropdown title={user.name} className="fw-bold" id="basic-nav-dropdown">
+                            <NavDropdown title={user.Nama} className="fw-bold" id="basic-nav-dropdown">
                                 <NavDropdown.Item as={Link} to="/" target="_blank"><i className="fa fa-external-link-alt me-2"></i> Visit Web</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item as={Link} to="/admin/categories"><i className="fa fa-folder me-2"></i> Categories</NavDropdown.Item>
