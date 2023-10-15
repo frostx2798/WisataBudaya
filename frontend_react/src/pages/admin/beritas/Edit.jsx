@@ -16,13 +16,20 @@ import Cookies from "js-cookie";
 //import toats
 import toast from "react-hot-toast";
 
-function CategoryEdit() {
+//import react Quill
+import ReactQuill from "react-quill";
+
+// quill CSS
+import 'react-quill/dist/quill.snow.css';
+
+function BeritaEdit() {
 
 	//title page
-    document.title = "Edit Category - Administrator Travel GIS";
+    document.title = "Edit Berita - Administrator Travel GIS";
 
     //state
-    const [name, setName] = useState("");
+    const [judul, setJudul] = useState("");
+    const [isi, setIsi] = useState("");
     const [image, setImage] = useState("");
 
     //state validation
@@ -37,11 +44,11 @@ function CategoryEdit() {
     //get ID from parameter URL
     const { id } = useParams();
 
-    //function "getCategoryById"
-    const getCategoryById = async () => {
+    //function "getBeritaById"
+    const getBeritaById = async () => {
 
         //get data from server
-        const response = await Api.get(`/api/admin/categories/${id}`, {
+        const response = await Api.get(`/api/admin/beritas/${id}`, {
 
             //header
             headers: {
@@ -54,14 +61,16 @@ function CategoryEdit() {
         const data = await response.data.data
 
         //assign data to state "name"
-        setName(data.name);
+        setJudul(data.judul);
+        setIsi(data.isi);
+        
     };
 
     //hook useEffect
     useEffect(() => {
 
-        //panggil function "getCategoryById"
-        getCategoryById();
+        //panggil function "getBeritaById"
+        getBeritaById();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -97,8 +106,8 @@ function CategoryEdit() {
         setImage(imageData);
     }
 
-    //function "updateCategory"
-    const updateCategory = async (e) => {
+    //function "updateBerita"
+    const updateBerita = async (e) => {
         e.preventDefault();
 
         //define formData
@@ -106,10 +115,11 @@ function CategoryEdit() {
 
         //append data to "formData"
         formData.append('image', image);
-        formData.append('name', name);
+        formData.append('judul', judul);
+        formData.append('isi', isi);
         formData.append('_method', 'PATCH');
 
-        await Api.post(`/api/admin/categories/${id}`, formData, {
+        await Api.post(`/api/admin/beritas/${id}`, formData, {
 
                 //header
                 headers: {
@@ -132,7 +142,7 @@ function CategoryEdit() {
                 });
 
                 //redirect dashboard page
-                navigate("/admin/categories");
+                navigate("/admin/beritas");
 
             })
             .catch((error) => {
@@ -150,10 +160,10 @@ function CategoryEdit() {
                     <div className="col-12">
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header">
-                                <span className="font-weight-bold"><i className="fa fa-folder"></i> EDIT CATEGORY</span>
+                                <span className="font-weight-bold"><i className="fa fa-folder"></i> EDIT BERITA</span>
                             </div>
                             <div className="card-body">
-                                <form onSubmit={updateCategory}>
+                                <form onSubmit={updateBerita}>
                                     <div className="mb-3">
                                         <label className="form-label fw-bold">Image</label>
                                         <input type="file" className="form-control" onChange={handleFileChange}/>
@@ -164,12 +174,21 @@ function CategoryEdit() {
                                         </div>
                                     )}
                                     <div className="mb-3">
-                                        <label className="form-label fw-bold">Category Name</label>
-                                        <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter Category Name"/>
+                                        <label className="form-label fw-bold">Judul Berita</label>
+                                        <input type="text" className="form-control" value={judul} onChange={(e) => setJudul(e.target.value)} placeholder="Enter Judul Berita"/>
                                     </div>
-                                    {validation.name && (
+                                    {validation.judul && (
                                         <div className="alert alert-danger">
-                                            {validation.name[0]}
+                                            {validation.judul[0]}
+                                        </div>
+                                    )}
+                                    <div className="mb-3">
+                                        <label className="form-label fw-bold">Isi Berita</label>
+                                        <ReactQuill theme="snow" rows="5" value={isi} onChange={(content) => setIsi(content)}/>
+                                    </div>
+                                    {validation.isi && (
+                                        <div className="alert alert-danger">
+                                            {validation.isi[0]}
                                         </div>
                                     )}
                                     <div>
@@ -186,4 +205,4 @@ function CategoryEdit() {
     );
 }
 
-export default CategoryEdit;
+export default BeritaEdit;

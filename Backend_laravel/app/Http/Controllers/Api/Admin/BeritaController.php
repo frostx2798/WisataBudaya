@@ -97,15 +97,14 @@ class BeritaController extends Controller
     public function update(Request $request, Berita $berita)
     {
         $validator = Validator::make($request->all(), [
-            'judul'         => 'required'.$berita->id,
-            'isi'           => 'required',
-            'image'         => 'required|image|mimes:jpeg,jpg,png|max:8000',
+            'judul'         => 'required',
+            'isi'           => 'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
+        
         //check image update
         if ($request->file('image')) {
 
@@ -119,9 +118,9 @@ class BeritaController extends Controller
             //update Berita with new image
             $berita->update([
                 'judul' => $request->judul,
-                'slug' => Str::slug($request->judul, '-'),
-                'isi' => $request->isi,
-                'image'=> $image->hashName(),
+                'slug'  => Str::slug($request->judul, '-'),
+                'isi'   => $request->isi,
+                'image' => $image->hashName(),
             ]);
 
         }

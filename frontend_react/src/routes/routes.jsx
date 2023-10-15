@@ -26,10 +26,10 @@ import CategoryEdit from '../pages/admin/categories/Edit.jsx';
 //import view admin places Index
 import BeritasIndex from '../pages/admin/beritas/Index.jsx';
 
-//import view admin places Index
+//import view admin berita create
 import BeritasCreate from '../pages/admin/beritas/Create.jsx';
 
-//import view admin places Index
+//import view admin berita edit
 import BeritasEdit from '../pages/admin/beritas/Edit.jsx';
 
 //import view admin places Index
@@ -174,6 +174,16 @@ function RoutesIndex() {
                 element={
                         <PrivateRoute>
                             <BeritasCreate />
+                        </PrivateRoute>
+                }
+            />
+
+                        {/* private route "/admin/beritas" */}
+                        <Route
+                path="/admin/beritas/edit/:id"
+                element={
+                        <PrivateRoute>
+                            <BeritasEdit />
                         </PrivateRoute>
                 }
             />
